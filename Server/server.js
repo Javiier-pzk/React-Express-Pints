@@ -12,7 +12,8 @@ app.get(`/`, async (req, res) => {
     const logoResponse = fetch(`${LOGO_URL}/${symbol.toUpperCase()}.png`)
     const nameAndPrice = await (await nameAndPriceResponse).json()
     const previousPrice = await (await previousPriceResponse).json()
-    const companyLogo = await (await logoResponse).blob()
+    const companyLogoBlob = await (await logoResponse).blob()
+    const companyLogoUrl = URL.createObjectURL(companyLogoBlob)
           
     data = {
         symbol: nameAndPrice.symbol,
@@ -20,7 +21,7 @@ app.get(`/`, async (req, res) => {
         latestPrice: nameAndPrice.latestPrice,
         changePercent: previousPrice.changePercent,
         change: previousPrice.change,
-        companyLogo: companyLogo
+        companyLogoUrl: companyLogoUrl
     }
     console.log(data)
     res.send(data)
