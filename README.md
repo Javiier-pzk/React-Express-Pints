@@ -1,6 +1,6 @@
 ## React-Express-Pints
 
-This is a mobile app, that retrieves stock information from https://iexcloud.io of a few stocks from [](https://iexcloud.io) and displays it on the screen.
+This is an example mobile app that uses a simple Client-Server architecture to retrieve information of a few stocks from https://iexcloud.io and then display the results on the mobile screen.
 
 
 ### Application Demo
