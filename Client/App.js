@@ -4,10 +4,12 @@ import { StyleSheet, Text, View, ActivityIndicator, FlatList, Image } from 'reac
 import { List, Provider as PaperProvider } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons'; 
+import * as Device from 'expo-device';
 
 
 export default function App() {
-  const SERVER_URL= `http://localhost:8080`  
+  const SERVER_URL_IOS= 'http://localhost:8080'
+  const SERVER_URL_ANDROID = 'http://10.0.2.2:8080' 
   const symbols = ['aapl', 'nflx', 'goog', 'amzn', 'tsla']
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -16,9 +18,11 @@ export default function App() {
   useEffect(() => {
     setIsLoading(true)
     const dataTemp = []
+    const osName = Device.osName
+    const serverUrl = osName === 'iOS' ? SERVER_URL_IOS : SERVER_URL_ANDROID
     const getData = async () => {
       for (let symbol of symbols) {
-        const response = fetch(`${SERVER_URL}/?symbol=${symbol}`)
+        const response = fetch(`${serverUrl}/?symbol=${symbol}`)
         const d = await (await response).json()
         dataTemp.push(d)
       }
