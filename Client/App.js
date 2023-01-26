@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, ActivityIndicator, FlatList } from 'react-native';
-import { Avatar, List, Provider as PaperProvider } from 'react-native-paper';
+import { StyleSheet, Text, View, ActivityIndicator, FlatList, Image } from 'react-native';
+import { List, Provider as PaperProvider } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons'; 
 
@@ -46,11 +46,12 @@ export default function App() {
   )
 
   const renderImage = (props, imgUrl) => (
-    <Avatar.Image 
-      {...props} 
-      size = {55}
+   <Image
+      {...props}
+      style = {styles.logo}
       source = {{uri: imgUrl}}
-    />
+      resizeMode= 'contain'
+   />
   )
 
   const renderPreviousPrices = (props, item) => (
@@ -159,5 +160,13 @@ const styles = StyleSheet.create({
   increaseChange: {
     fontSize: 14,
     color: 'green'
+  },
+  logo: {
+    width: 55,
+    height: 55,
+    borderRadius: 30,
+    borderColor: '#D3D3D3',
+    borderWidth: 2
+
   }
 });
