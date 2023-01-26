@@ -11,8 +11,10 @@ export default function App() {
   const symbols = ['aapl', 'nflx', 'goog', 'amzn', 'tsla']
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isServerActive, setIsServerActive] = useState(true)
   
   useEffect(() => {
+    setIsLoading(true)
     const dataTemp = []
     const getData = async () => {
       for (let symbol of symbols) {
@@ -25,9 +27,13 @@ export default function App() {
     getData()
       .then(() => {
         setData(dataTemp)
+        setIsServerActive(true)
         setIsLoading(false)
       })
-      .catch(err => console.log(err))
+      .catch(() => {
+        setIsServerActive(false)
+        setIsLoading(false)
+      })
   }, [])
 
   const renderList = ({ item }) => (
@@ -89,13 +95,16 @@ export default function App() {
             <ActivityIndicator size='large' style={styles.loading} />
             <Text>Fetching stock info...</Text>
           </View>
-        ) : (
-          <FlatList
-            style = {styles.list}
-            data = {data}
-            renderItem = {renderList}
-          />
-        )}
+          ) : isServerActive ? ( 
+            <FlatList
+              style = {styles.list}
+              data = {data}
+              renderItem = {renderList}
+            />
+          ) : (
+            <Text>Oops! Server is inactive.</Text>
+          ) 
+        }
       </SafeAreaView>
     </PaperProvider>
   );
