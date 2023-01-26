@@ -7,21 +7,23 @@ const TOKEN_QUERY = '?token=pk_f6127aac223a4a309196101835d528c6'
 
 app.get(`/`, async (req, res) => {
     const symbol = req.query.symbol
-    const nameAndPriceResponse = fetch(`${BASE_URL}/${symbol}/quote/${TOKEN_QUERY}`)
-    const previousPriceResponse = fetch(`${BASE_URL}/${symbol}/previous/${TOKEN_QUERY}`)
-    const logoResponse = fetch(`${LOGO_URL}/${symbol.toUpperCase()}.png`)
-    const nameAndPrice = await (await nameAndPriceResponse).json()
-    const previousPrice = await (await previousPriceResponse).json()
-    const companyLogoBlob = await (await logoResponse).blob()
-    const companyLogoUrl = URL.createObjectURL(companyLogoBlob)
-          
+    const nameAndPriceResponse = await fetch(`${BASE_URL}/${symbol}/quote/${TOKEN_QUERY}`)
+    const previousPriceResponse = await fetch(`${BASE_URL}/${symbol}/previous/${TOKEN_QUERY}`)
+    const logoResponse = await fetch(`${LOGO_URL}/${symbol.toUpperCase()}.png`)
+    const logoContentType = logoResponse.headers.get('Content-Type')
+    const nameAndPrice = await nameAndPriceResponse.json()
+    const previousPrice = await previousPriceResponse.json()
+    const buffer = Buffer.from(await logoResponse.arrayBuffer())
+    const companyLogoBase64 = `data:${logoContentType};base64, ${buffer.toString('base64')}`
+    
     data = {
-        symbol: nameAndPrice.symbol,
+        key: nameAndPrice.symbol,
         companyName: nameAndPrice.companyName,
-        latestPrice: nameAndPrice.latestPrice,
-        changePercent: previousPrice.changePercent,
-        change: previousPrice.change,
-        companyLogoUrl: companyLogoUrl
+        latestPrice: nameAndPrice.latestPrice.toFixed(2),
+        changePercent: (previousPrice.changePercent * 100).toFixed(2),
+        change: previousPrice.change.toFixed(2),
+        companyLogo: companyLogoBase64
+
     }
     console.log(data)
     res.send(data)
