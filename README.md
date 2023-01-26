@@ -4,7 +4,8 @@ This is an example mobile app that uses a simple Client-Server architecture to r
 
 
 ### Application Demo
-![react-express-pints](https://user-images.githubusercontent.com/85099754/214916720-2badf1fb-d680-4649-af1c-575b02bcdb72.gif)
+![react-express-pints](https://user-images.githubusercontent.com/85099754/214916720-2badf1fb-d680-4649-af1c-575b02bcdb72.gif)                            ![react-express-pints-android](https://user-images.githubusercontent.com/85099754/214924974-c149048c-b5bf-45fa-97d8-e4781ea5ee17.gif)
+
 
 
 ## Tech Stack
