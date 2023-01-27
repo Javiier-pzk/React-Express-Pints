@@ -26,9 +26,11 @@ This is an example mobile app that uses a simple Client-Server architecture to r
 2. To get the expected output shown above, the server must be started before the app.
 3. Navigate to the `Server` directory and run the following commands to start the node server
   - `cd Server`
+  - `npm install` or `yarn install`
   - `yarn run server` or `npm run server`
 4. Open any iOS or Android simulator that you use.
 5. Then go to the `Client` directory and start running the app with these commands:
   - `cd ../Client`
+  - `npm install` or `yarn install`
   -  `expo start --ios` or `expo start --android` depending on your device
 6. Wait for the app to load and the expected output shoud appear
